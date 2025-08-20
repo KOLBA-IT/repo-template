@@ -1,0 +1,47 @@
+name: CI (very basic)
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Если есть Node-проект — шаги сработают; если нет — пропустятся
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Enable corepack (pnpm/yarn support)
+        run: corepack enable
+
+      - name: Install deps (npm/pnpm/yarn auto-detect)
+        run: |
+          if [ -f package.json ]; then
+            if command -v pnpm >/dev/null 2>&1; then pnpm i --frozen-lockfile || pnpm i;                 elif command -v yarn >/dev/null 2>&1; then yarn install --frozen-lockfile || yarn install;                 else npm ci || npm i; fi
+          else
+            echo "No package.json — skipping JS install"
+          fi
+
+      - name: Lint (if present)
+        run: |
+          if [ -f package.json ]; then
+            npm run lint --if-present
+          fi
+
+      - name: Test (if present)
+        run: |
+          if [ -f package.json ]; then
+            npm test --if-present
+          fi
+
+      - name: Build (if present)
+        run: |
+          if [ -f package.json ]; then
+            npm run build --if-present
+          fi
