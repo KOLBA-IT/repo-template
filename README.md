@@ -16,13 +16,13 @@
    > Хук запретит прямой `git push` в ветку `main`.
 
 ## Минимальный Git‑процесс
-- Все изменения — через ветки `feature/<кратко>` или `fix/<кратко>`
+- Все изменения — через ветки `<type>/<short-name>` (например, `backend/post-audits`)
 - Рабочий ритуал:
   ```bash
   git switch main && git pull
-  git switch -c feature/<кратко>
+  git switch -c <type>/<short-name>
   # работа → коммиты
-  git push -u origin feature/<кратко>
+  git push -u origin <type>/<short-name>
   ```
 - Открываем PR → проверяем, что CI зелёный → **Squash and merge** → удаляем ветку
 
