@@ -8,7 +8,8 @@
 
 ## Ритуал перед началом задачи
 ```bash
-git switch main && git pull
+git switch main
+git pull
 git switch -c <type>/<short-name>
 ```
 
