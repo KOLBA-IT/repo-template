@@ -19,7 +19,8 @@
 - Все изменения — через ветки `<type>/<short-name>` (например, `backend/post-audits`)
 - Рабочий ритуал:
   ```bash
-  git switch main && git pull
+  git switch main
+  git pull
   git switch -c <type>/<short-name>
   # работа → коммиты
   git push -u origin <type>/<short-name>
